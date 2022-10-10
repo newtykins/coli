@@ -1,5 +1,6 @@
 use clap::{Parser, Subcommand};
 
+mod gradient;
 mod random;
 
 // Main CLI definitions
@@ -13,12 +14,14 @@ struct Value {
 #[derive(Subcommand)]
 enum Commands {
     Random(random::Options),
+    Gradient(gradient::Options),
 }
 
 fn main() {
     let value = Value::parse();
 
     match &value.command {
-        Commands::Random(options) => random::run(*options),
+        Commands::Random(options) => random::run(options.clone()),
+        Commands::Gradient(options) => gradient::run(options.clone()),
     }
 }
