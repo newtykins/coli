@@ -13,14 +13,14 @@ pub struct Options {
 }
 
 /// Generate a random colour and print it to the console
-pub fn run(options: Options) {
+pub fn run(options: &Options) {
     if options.quantity <= 0 {
-        error("Quantity must be greater than 0!");
+        utils::error("Quantity must be greater than 0!");
         return;
     }
 
     for _ in 0..options.quantity {
-        let colour = generate_colour();
+        let colour = utils::generate_colour();
 
         println!(
             "{}  {}",

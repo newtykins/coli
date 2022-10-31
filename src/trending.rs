@@ -1,20 +1,47 @@
-use headless_chrome::Browser;
+use clap::Args;
+use headless_chrome::{Browser, LaunchOptionsBuilder};
 use regex::Regex;
 
 include!("rgb.rs");
+include!("utils.rs");
 
-// todo: find a way to hide the headless chrome window
-// todo: allow for more than 48 palettes at once by scrolling the window before parsing
-pub fn run() -> Result<(), Box<dyn std::error::Error>> {
-    let browser = Browser::default()?;
-    let tab = browser.wait_for_initial_tab()?;
+#[derive(Args, Clone)]
+pub struct Options {
+    #[arg(short, long, default_value_t = 10)]
+    quantity: u8,
+}
+
+pub fn run(options: &mut Options) {
+    if options.quantity > 48 {
+        options.quantity = 48;
+        utils::warn("The max quantity for this subcommand is 48!");
+    }
+
+    let browser = Browser::new(
+        LaunchOptionsBuilder::default()
+            .args(vec![std::ffi::OsStr::new("--disable-headless-mode")])
+            .build()
+            .unwrap(),
+    )
+    .unwrap();
+
+    let tab = browser.wait_for_initial_tab().unwrap();
     let re = Regex::new(r"rgb\(([0-9]+),[ ]?([0-9]+),[ ]?([0-9]+)\)").unwrap();
 
-    tab.navigate_to("https://coolors.co/palettes/trending")?;
-    let palettes = tab.wait_for_elements(".palette-card_colors")?;
+    tab.navigate_to("https://coolors.co/palettes/trending")
+        .unwrap();
 
-    for palette in &palettes {
-        let html = palette.get_content().unwrap_or("".to_string());
+    let palettes = tab.wait_for_elements(".palette-card_colors").unwrap();
+
+    for i in 0..palettes.len() {
+        if usize::from(options.quantity) == i {
+            break;
+        }
+
+        print!("{}    ", format!("{}.", i + 1).bold());
+
+        let palette = &palettes[i];
+        let html = palette.get_content().unwrap();
         let colours = re.captures_iter(Box::leak(html.into_boxed_str()));
         let mut url = "https://coolors.co/palette/".to_string();
 
@@ -38,8 +65,4 @@ pub fn run() -> Result<(), Box<dyn std::error::Error>> {
         // New line for each palette!
         print!("\n");
     }
-
-    println!("{}", palettes.len());
-
-    Ok(())
 }

@@ -42,34 +42,34 @@ fn parse_hex(hex_string: String) -> owo_colors::Rgb {
     let split = hex_string.split('#').nth_back(0).unwrap_or("").to_string();
 
     if split.len() != 6 {
-        return generate_colour();
+        return utils::generate_colour();
     }
 
     let colour = hex::decode(split).map(|bytes| owo_colors::Rgb(bytes[0], bytes[1], bytes[2]));
 
     match colour {
         Ok(out) => return out,
-        Err(_) => return generate_colour(),
+        Err(_) => return utils::generate_colour(),
     }
 }
 
-pub fn run(options: Options) {
+pub fn run(options: &Options) {
     if options.steps <= 0 {
-        error("Step count must be greater than 0!");
+        utils::error("Step count must be greater than 0!");
         return;
     }
 
     let from;
     let to;
 
-    match options.from {
-        Some(hex) => from = parse_hex(hex),
-        None => from = generate_colour(),
+    match &(*options).from {
+        Some(hex) => from = parse_hex(hex.to_string()),
+        None => from = utils::generate_colour(),
     }
 
-    match options.to {
-        Some(hex) => to = parse_hex(hex),
-        None => to = generate_colour(),
+    match &(*options).to {
+        Some(hex) => to = parse_hex(hex.to_string()),
+        None => to = utils::generate_colour(),
     }
 
     let gradient = generate_gradient(from, to, options.steps);

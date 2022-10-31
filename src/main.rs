@@ -3,6 +3,7 @@ use clap::{Parser, Subcommand};
 mod gradient;
 mod random;
 mod trending;
+mod utils;
 
 // Main CLI definitions
 #[derive(Parser)]
@@ -16,15 +17,15 @@ struct Value {
 enum Commands {
     Random(random::Options),
     Gradient(gradient::Options),
-    Trending,
+    Trending(trending::Options),
 }
 
 fn main() {
     let value = Value::parse();
 
-    match &value.command {
-        Commands::Random(options) => random::run(options.clone()),
-        Commands::Gradient(options) => gradient::run(options.clone()),
-        Commands::Trending => trending::run().unwrap(),
+    match value.command {
+        Commands::Random(options) => random::run(&options),
+        Commands::Gradient(options) => gradient::run(&options),
+        Commands::Trending(mut options) => trending::run(&mut options),
     }
 }

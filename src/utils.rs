@@ -1,21 +1,35 @@
-use rand::Rng;
+#[allow(dead_code)]
 
-/// Log an error!
-pub fn error(message: &str) {
-    print!(
-        "{} {}",
-        "[ERROR]".color(Rgb(255, 0, 0)).bold(),
-        message
-    );
-}
+pub mod utils {
+    use rand::Rng;
+    include!("rgb.rs");
 
-/// Generate a random colour
-fn generate_colour() -> Rgb {
-    let mut rng = rand::thread_rng();
+    fn log(label: &str, colour: Rgb, message: &str) {
+        println!(
+            "{} {}",
+            format!("[{}]", label).color(colour).bold(),
+            message
+        )
+    }
 
-    return Rgb(
-        rng.gen_range(0..255),
-        rng.gen_range(0..255),
-        rng.gen_range(0..255),
-    );
+    /// Log an error!
+    pub fn error(message: &str) {
+        log("ERROR", Rgb(255, 0, 0), message);
+    }
+
+    /// Log a warning!
+    pub fn warn(message: &str) {
+        log("WARN", Rgb(255, 191, 0), message);
+    }
+
+    /// Generate a random colour
+    pub fn generate_colour() -> Rgb {
+        let mut rng = rand::thread_rng();
+
+        return Rgb(
+            rng.gen_range(0..255),
+            rng.gen_range(0..255),
+            rng.gen_range(0..255),
+        );
+    }
 }
