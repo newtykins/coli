@@ -2,6 +2,7 @@ use clap::{Parser, Subcommand};
 
 mod gradient;
 mod random;
+mod trending;
 
 // Main CLI definitions
 #[derive(Parser)]
@@ -15,6 +16,7 @@ struct Value {
 enum Commands {
     Random(random::Options),
     Gradient(gradient::Options),
+    Trending,
 }
 
 fn main() {
@@ -23,5 +25,6 @@ fn main() {
     match &value.command {
         Commands::Random(options) => random::run(options.clone()),
         Commands::Gradient(options) => gradient::run(options.clone()),
+        Commands::Trending => trending::run().unwrap(),
     }
 }
