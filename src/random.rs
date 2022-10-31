@@ -5,9 +5,11 @@ include!("utils.rs");
 
 #[derive(Args, Clone)]
 pub struct Options {
+    /// The amount of colours to generate
     #[arg(short, long, default_value_t = 1)]
     quantity: usize,
 
+    /// Output the colour value in RGB rather than hex
     #[arg(short, long, default_value_t = false)]
     rgb: bool,
 }

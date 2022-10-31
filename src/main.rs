@@ -15,8 +15,13 @@ struct Value {
 
 #[derive(Subcommand)]
 enum Commands {
+    /// Generates a random colour
     Random(random::Options),
+
+    /// Generates a gradient between two colours
     Gradient(gradient::Options),
+
+    /// Displays today's trending palettes on coolors.co
     Trending(trending::Options),
 }
 

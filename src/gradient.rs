@@ -6,12 +6,15 @@ include!("utils.rs");
 
 #[derive(Args, Clone)]
 pub struct Options {
+    /// The colour which the gradient starts on (hex)
     #[arg(short, long)]
     from: Option<String>,
 
+    /// The colour which the gradient ends on (hex)
     #[arg(short, long)]
     to: Option<String>,
 
+    /// The amount of colours to include in the gradient
     #[arg(short, long, default_value_t = 10)]
     steps: usize,
 }

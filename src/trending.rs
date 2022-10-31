@@ -7,6 +7,7 @@ include!("utils.rs");
 
 #[derive(Args, Clone)]
 pub struct Options {
+    /// The amount of palettes to display. Max is 48
     #[arg(short, long, default_value_t = 10)]
     quantity: u8,
 }
