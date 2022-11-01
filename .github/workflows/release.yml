@@ -27,7 +27,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get upgrade
-          sudo apt-get install openssl
+          sudo apt-get install libssl-dev
 
       - name: Prepare the toolchain
         uses: actions-rs/toolchain@v1
@@ -35,6 +35,9 @@ jobs:
           toolchain: nightly
           target: ${{ matrix.target }}
           override: true
+
+      - name: Cache toolchain
+        uses: Swatinem/rust-cache@v2
 
       - name: Build the project
         uses: actions-rs/cargo@v1
