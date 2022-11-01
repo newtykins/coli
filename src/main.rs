@@ -29,8 +29,8 @@ fn main() {
     let value = Value::parse();
 
     match value.command {
-        Commands::Random(options) => random::run(&options),
-        Commands::Gradient(options) => gradient::run(&options),
+        Commands::Random(mut options) => random::run(&mut options),
+        Commands::Gradient(mut options) => gradient::run(&mut options),
         Commands::Trending(mut options) => trending::run(&mut options),
     }
 }

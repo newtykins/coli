@@ -14,8 +14,8 @@ pub struct Options {
 
 pub fn run(options: &mut Options) {
     if options.quantity > 48 {
+        utils::warn("The max quantity for this subcommand is 48! Reverted to default of 10.");
         options.quantity = 48;
-        utils::warn("The max quantity for this subcommand is 48!");
     }
 
     let browser = Browser::new(

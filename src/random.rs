@@ -15,10 +15,10 @@ pub struct Options {
 }
 
 /// Generate a random colour and print it to the console
-pub fn run(options: &Options) {
-    if options.quantity <= 0 {
-        utils::error("Quantity must be greater than 0!");
-        return;
+pub fn run(options: &mut Options) {
+    if options.quantity == 0 {
+        utils::warn("Quantity must be greater than 0! Reverted to default of 1.");
+        options.quantity = 1;
     }
 
     for _ in 0..options.quantity {

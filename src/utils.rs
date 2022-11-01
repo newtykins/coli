@@ -12,11 +12,6 @@ pub mod utils {
         )
     }
 
-    /// Log an error!
-    pub fn error(message: &str) {
-        log("ERROR", Rgb(255, 0, 0), message);
-    }
-
     /// Log a warning!
     pub fn warn(message: &str) {
         log("WARN", Rgb(255, 191, 0), message);

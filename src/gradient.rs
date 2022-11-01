@@ -56,10 +56,10 @@ fn parse_hex(hex_string: String) -> owo_colors::Rgb {
     }
 }
 
-pub fn run(options: &Options) {
+pub fn run(options: &mut Options) {
     if options.steps <= 0 {
-        utils::error("Step count must be greater than 0!");
-        return;
+        utils::warn("Step count must be greater than 0! Reverted to default of 10.");
+        options.steps = 10;
     }
 
     let from;
