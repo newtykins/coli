@@ -1,3 +1,5 @@
+name: Build release
+
 on:
   release:
     types: [created]
@@ -16,12 +18,16 @@ jobs:
             friendly: Windows
           - target: x86_64-unknown-linux-musl
             friendly: Linux
-          - target: x86_64-apple-darwin
-            friendly: Mac
             
     steps:
       - name: Checkout the repository
         uses: actions/checkout@master
+
+      - name: Update libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get upgrade
+          sudo apt-get install openssl
 
       - name: Prepare the toolchain
         uses: actions-rs/toolchain@v1
