@@ -2,8 +2,7 @@ use clap::{Parser, Subcommand};
 
 mod gradient;
 mod random;
-mod trending;
-mod utils;
+mod recent;
 
 // Main CLI definitions
 #[derive(Parser)]
@@ -21,8 +20,8 @@ enum Commands {
     /// Generates a gradient between two colours
     Gradient(gradient::Options),
 
-    /// Displays today's trending palettes on coolors.co
-    Trending(trending::Options),
+    /// Get recent palettes made on ColorHunt
+    Recent,
 }
 
 fn main() {
@@ -31,6 +30,6 @@ fn main() {
     match value.command {
         Commands::Random(mut options) => random::run(&mut options),
         Commands::Gradient(mut options) => gradient::run(&mut options),
-        Commands::Trending(mut options) => trending::run(&mut options),
+        Commands::Recent => recent::run()
     }
 }

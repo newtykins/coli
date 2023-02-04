@@ -1,8 +1,7 @@
 use clap::Args;
+use coli::{generate_colour, warn, ColourConversion};
+use owo_colors::{OwoColorize, Rgb};
 use palette::LinSrgb;
-
-include!("rgb.rs");
-include!("utils.rs");
 
 #[derive(Args, Clone)]
 pub struct Options {
@@ -45,20 +44,20 @@ fn parse_hex(hex_string: String) -> owo_colors::Rgb {
     let split = hex_string.split('#').nth_back(0).unwrap_or("").to_string();
 
     if split.len() != 6 {
-        return utils::generate_colour();
+        return generate_colour();
     }
 
     let colour = hex::decode(split).map(|bytes| owo_colors::Rgb(bytes[0], bytes[1], bytes[2]));
 
     match colour {
         Ok(out) => return out,
-        Err(_) => return utils::generate_colour(),
+        Err(_) => return generate_colour(),
     }
 }
 
 pub fn run(options: &mut Options) {
     if options.steps <= 0 {
-        utils::warn("Step count must be greater than 0! Reverted to default of 10.");
+        warn("Step count must be greater than 0! Reverted to default of 10.");
         options.steps = 10;
     }
 
@@ -67,12 +66,12 @@ pub fn run(options: &mut Options) {
 
     match &(*options).from {
         Some(hex) => from = parse_hex(hex.to_string()),
-        None => from = utils::generate_colour(),
+        None => from = generate_colour(),
     }
 
     match &(*options).to {
         Some(hex) => to = parse_hex(hex.to_string()),
-        None => to = utils::generate_colour(),
+        None => to = generate_colour(),
     }
 
     let gradient = generate_gradient(from, to, options.steps);

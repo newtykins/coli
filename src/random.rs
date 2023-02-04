@@ -1,7 +1,6 @@
 use clap::Args;
-
-include!("rgb.rs");
-include!("utils.rs");
+use coli::{generate_colour, warn, ColourConversion};
+use owo_colors::OwoColorize;
 
 #[derive(Args, Clone)]
 pub struct Options {
@@ -17,12 +16,12 @@ pub struct Options {
 /// Generate a random colour and print it to the console
 pub fn run(options: &mut Options) {
     if options.quantity == 0 {
-        utils::warn("Quantity must be greater than 0! Reverted to default of 1.");
+        warn("Quantity must be greater than 0! Reverted to default of 1.");
         options.quantity = 1;
     }
 
     for _ in 0..options.quantity {
-        let colour = utils::generate_colour();
+        let colour = generate_colour();
 
         println!(
             "{}  {}",

@@ -8,7 +8,7 @@
 
 ### What is coli?
 
-coli is a CLI that I made as my first Rust project which allows you to generate random colours, create gradients between colours, and view trending colour palettes (found on [coolors.co](https://coolors.co)). I think it is kind of neat ¯\\\_(ツ)\_/¯
+coli is a CLI that I made as my first Rust project which allows you to generate random colours, create gradients between colours, and view recently submitted colour palettes on [colorhunt.co](https://colorhunt.co)). I think it is kind of neat ¯\\\_(ツ)\_/¯
 
 ### Documentation
 
@@ -31,14 +31,9 @@ generates a gradient between two colours
 - `--to, -t` - the colour which the gradient ends on
 - `--steps, -s` - the amount of colours to include in the gradient
 
-#### `coli trending`
+#### `coli recent`
 
-displays today's trending palettes on coolors.co
-
-##### Flags
-
-- `--quantity, -q` - the amount of palettes to display. max is 48
-  <br>
+displays recently added palettes on [colorhunt.co](https://colorhunt.co)
 
 <img src="paint.jpg" />
 <sub>Image by <a href="https://pixabay.com/users/stux-12364/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1241879">Stefan Schweihofer</a> from <a href="https://pixabay.com//?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=1241879">Pixabay</a></sub>
